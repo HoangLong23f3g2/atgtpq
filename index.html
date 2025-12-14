@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -6,123 +7,36 @@
     <title>QuizMaster - Hệ Thống Huấn Luyện</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* GIỮ NGUYÊN CSS NHƯ CŨ */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #f0f2f5; 
-            margin: 0; 
-            padding: 0; 
-            display: flex; /* Flex layout cho sidebar và content */
-            min-height: 100vh;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; display: flex; min-height: 100vh; }
         *, ::before, ::after { box-sizing: border-box; }
 
-        /* --- SIDEBAR STYLES (Style theo File C) --- */
-        #sidebar {
-            width: 280px;
-            background-color: #2c3e50; /* Màu nền tối sang trọng */
-            color: white;
-            padding: 20px;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            overflow-y: auto;
-            z-index: 50;
-            transition: all 0.3s ease;
-        }
+        /* --- SIDEBAR STYLES --- */
+        #sidebar { width: 280px; background-color: #2c3e50; color: white; padding: 20px; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1); height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 50; transition: all 0.3s ease; }
+        #sidebar h2 { text-align: center; margin-bottom: 30px; background-color: #34495e; color: #ecf0f1; padding: 15px; border-radius: 8px; font-size: 1.2rem; border-bottom: 2px solid #1abc9c; cursor: pointer; }
+        #sidebar ul { list-style-type: none; padding: 0; }
+        #sidebar li { margin-bottom: 12px; }
+        #sidebar li a { display: flex; align-items: center; padding: 15px; text-decoration: none; color: white; border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; font-weight: 500; font-size: 0.95rem; position: relative; overflow: hidden; }
+        #sidebar li a:hover { transform: translateX(5px); box-shadow: 2px 2px 8px rgba(0,0,0,0.2); filter: brightness(1.1); }
+        #sidebar li a i { margin-right: 10px; width: 20px; text-align: center; }
 
-        #sidebar h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            background-color: #34495e;
-            color: #ecf0f1;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            border-bottom: 2px solid #1abc9c;
-            cursor: pointer;
-        }
-
-        #sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #sidebar li {
-            margin-bottom: 12px;
-        }
-
-        #sidebar li a {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            text-decoration: none;
-            color: white;
-            border-radius: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-weight: 500;
-            font-size: 0.95rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #sidebar li a:hover {
-            transform: translateX(5px);
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-            filter: brightness(1.1);
-        }
-
-        #sidebar li a i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* --- MÀU SẮC MENU (Dịu mắt, không quá tương phản) --- */
-        /* Tôi tạo một bảng màu dịu (muted/flat colors) */
-        .bg-color-0 { background-color: #5D6D7E; } /* Xám xanh */
-        .bg-color-1 { background-color: #cd6155; } /* Đỏ đất */
-        .bg-color-2 { background-color: #af7ac5; } /* Tím nhạt */
-        .bg-color-3 { background-color: #5499c7; } /* Xanh biển dịu */
-        .bg-color-4 { background-color: #48c9b0; } /* Xanh ngọc */
-        .bg-color-5 { background-color: #f39c12; } /* Cam đất */
-        .bg-color-6 { background-color: #52be80; } /* Xanh lá dịu */
+        .bg-color-0 { background-color: #5D6D7E; }
+        .bg-color-1 { background-color: #cd6155; }
+        .bg-color-2 { background-color: #af7ac5; }
+        .bg-color-3 { background-color: #5499c7; }
+        .bg-color-4 { background-color: #48c9b0; }
+        .bg-color-5 { background-color: #f39c12; }
+        .bg-color-6 { background-color: #52be80; }
         
-        .disabled-link {
-            background-color: #95a5a6 !important;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
+        .disabled-link { background-color: #95a5a6 !important; cursor: not-allowed; opacity: 0.7; }
 
         /* --- MAIN CONTENT STYLES --- */
-        #main-content {
-            margin-left: 280px; /* Chừa chỗ cho sidebar */
-            padding: 30px;
-            flex-grow: 1;
-            width: calc(100% - 280px);
-            transition: all 0.3s ease;
-        }
+        #main-content { margin-left: 280px; padding: 30px; flex-grow: 1; width: calc(100% - 280px); transition: all 0.3s ease; }
+        @media (max-width: 768px) { #sidebar { width: 0; padding: 0; overflow: hidden; } #main-content { margin-left: 0; width: 100%; padding: 15px; } }
 
-        /* Responsive cho màn hình nhỏ */
-        @media (max-width: 768px) {
-            #sidebar {
-                width: 0;
-                padding: 0;
-                overflow: hidden;
-            }
-            #main-content {
-                margin-left: 0;
-                width: 100%;
-                padding: 15px;
-            }
-            /* Nút mở menu sẽ hiện ra (xử lý sau bằng JS nếu cần thiết, 
-               nhưng ở đây tập trung vào PC/Tablet theo yêu cầu) */
-        }
-
-        /* --- UTILITIES TỪ FILE B (Giữ lại để đẹp) --- */
+        /* --- UTILITIES --- */
         .bg-white { background-color: #fff; }
         .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
@@ -141,6 +55,7 @@
         .text-indigo-600 { color: #4f46e5; }
         .text-gray-800 { color: #1f2937; }
         .text-green-600 { color: #16a34a; }
+        .text-red-600 { color: #dc2626; }
         .flex { display: flex; }
         .justify-between { justify-content: space-between; }
         .items-center { align-items: center; }
@@ -148,58 +63,29 @@
         .gap-4 { gap: 1rem; }
         .w-full { width: 100%; }
         .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
         .hover\:bg-gray-50:hover { background-color: #f9fafb; }
         .border { border: 1px solid #e5e7eb; }
         .transition { transition: all 0.2s; }
         .cursor-pointer { cursor: pointer; }
         
-        /* Quiz Styles */
         .correct-answer { background-color: #d1fae5; border: 2px solid #34d399; }
         .wrong-answer { background-color: #fee2e2; border: 2px solid #f87171; }
         input[type="radio"] { transform: scale(1.2); margin-right: 10px; }
         
-        /* Buttons */
-        .btn-action {
-            display: inline-block;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            color: white;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+        .btn-action { display: inline-block; padding: 12px 24px; border-radius: 8px; font-weight: 600; color: white; border: none; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; }
         .btn-action:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
         .bg-indigo { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .bg-green { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); }
         .bg-gray { background: #95a5a6; }
 
-        /* Modal Styles */
-        #login-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
-            z-index: 9999; display: flex; align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background: white; padding: 2.5rem; border-radius: 1rem; width: 90%; max-width: 450px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            animation: slideDown 0.4s ease-out;
-            text-align: center;
-        }
+        #login-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 2.5rem; border-radius: 1rem; width: 90%; max-width: 450px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); animation: slideDown 0.4s ease-out; text-align: center; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Header bar in main content */
-        .top-bar {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .timer-warning { animation: pulse-red 1s infinite; color: #dc2626 !important; font-weight: bold; }
+        @keyframes pulse-red { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -211,17 +97,84 @@
             </div>
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Đăng Nhập Hệ Thống</h2>
             <p class="text-gray-500 mb-6">Chọn tên của bạn để truy cập kho bài tập.</p>
-            
             <select id="user-select" class="w-full p-3 border border-gray-300 rounded-lg mb-6 bg-gray-50 text-gray-800 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 <option value="" disabled selected>-- Vui lòng chọn tên --</option>
-                <option value="Nguyễn Văn An">Nguyễn Văn An</option>
-                <option value="Trần Văn Bình">Trần Văn Bình</option>
-                <option value="Huỳnh Văn Chương">Huỳnh Văn Chương</option>
+                <option value="Th Pháp Tâm">Th Pháp Tâm</option>
+				<option value="Th Pháp Thành">Th Pháp Thành</option>
+				<option value="Th Pháp Quân">Th Pháp Quân</option>
+				<option value="Th Pháp Tịnh">Th Pháp Tịnh</option>
+				<option value="Th Pháp Trí">Th Pháp Trí</option>
+				<option value="Th Pháp Tánh">Th Pháp Tánh</option>
+				<option value="Th Pháp Thể">Th Pháp Thể</option>
+				<option value="Th Thanh Bảo">Th Thanh Bảo</option>
+				<option value="Th Pháp Huy">Th Pháp Huy</option>
+				<option value="Th Pháp Hội">Th Pháp Hội</option>
+				<option value="Th Pháp Nghiêm">Th Pháp Nghiêm</option>
+				<option value="Th Pháp Lâm">Th Pháp Lâm</option>
+				<option value="Th Pháp Minh">Th Pháp Minh</option>
+				<option value="Th Pháp Toàn">Th Pháp Toàn</option>
+				<option value="Th Pháp Sơn">Th Pháp Sơn</option>
+				<option value="Th Pháp Vĩnh">Th Pháp Vĩnh</option>
+				<option value="Th Pháp Bản">Th Pháp Bản</option>
+				<option value="Th Pháp Trung">Th Pháp Trung</option>
+				<option value="Th Pháp Ân">Th Pháp Ân</option>
+				<option value="Th Pháp Định">Th Pháp Định</option>
+				<option value="Th Pháp Hưng">Th Pháp Hưng</option>
+				<option value="Th Pháp Thông">Th Pháp Thông</option>
+				<option value="Th Pháp Thuận">Th Pháp Thuận</option>
+				<option value="Th Pháp Diễn">Th Pháp Diễn</option>
+				<option value="Th Pháp Trưởng">Th Pháp Trưởng</option>
+				<option value="Th Pháp Tiến">Th Pháp Tiến</option>
+				<option value="Th Pháp Thắng">Th Pháp Thắng</option>
+				<option value="Th Pháp Truyền">Th Pháp Truyền</option>
+				<option value="Th Pháp Điền">Th Pháp Điền</option>
+				<option value="Th Pháp Đồng">Th Pháp Đồng</option>
+				<option value="Th Pháp Đạt">Th Pháp Đạt</option>
+				<option value="Th Pháp Vinh">Th Pháp Vinh</option>
+				<option value="Th Pháp Viễn">Th Pháp Viễn</option>
+				<option value="Th Pháp Vượng">Th Pháp Vượng</option>
+				<option value="Th Pháp Ngộ">Th Pháp Ngộ</option>
+				<option value="Th Pháp Ngữ">Th Pháp Ngữ</option>
+				<option value="Th Pháp Nghĩa">Th Pháp Nghĩa</option>
+				<option value="Th Pháp Hữu">Th Pháp Hữu</option>
+				<option value="Th Pháp Hiển">Th Pháp Hiển</option>
+				<option value="Th Pháp Liêm">Th Pháp Liêm</option>
+				<option value="Th Pháp Chính">Th Pháp Chính</option>
+				<option value="Th Pháp Hậu">Th Pháp Hậu</option>
+				<option value="Th Pháp Khai">Th Pháp Khai</option>
+				<option value="Th Pháp Hoằng">Th Pháp Hoằng</option>
+				<option value="Th Pháp Doanh">Th Pháp Doanh</option>
+				<option value="Th Pháp Khả">Th Pháp Khả</option>
+				<option value="Th Pháp Thiện">Th Pháp Thiện</option>
+				<option value="Th Pháp Hoá">Th Pháp Hoá</option>
+				<option value="Th Quảng Thuyết">Th Quảng Thuyết</option>
+				<option value="Th Quảng Diễn">Th Quảng Diễn</option>
+				<option value="Th Pháp Duyên">Th Pháp Duyên</option>
+				<option value="Th Pháp Nhiên">Th Pháp Nhiên</option>
+				<option value="Th Pháp Khiêm">Th Pháp Khiêm</option>
+				<option value="Th Pháp Nhẫn">Th Pháp Nhẫn</option>
+				<option value="Th Pháp Giới">Th Pháp Giới</option>
+				<option value="Th Pháp Lương">Th Pháp Lương</option>
+				<option value="Th Pháp Đạo">Th Pháp Đạo</option>
+				<option value="Th Pháp Linh">Th Pháp Linh</option>
+				<option value="Th Pháp Kiên">Th Pháp Kiên</option>
+				<option value="Th Pháp Luân">Th Pháp Luân</option>
+				<option value="Th Pháp Chân">Th Pháp Chân</option>
+				<option value="Th Pháp Hỷ">Th Pháp Hỷ</option>
+				<option value="Th Pháp Long">Th Pháp Long</option>
+				<option value="Th Pháp Thanh">Th Pháp Thanh</option>
+				<option value="Th Pháp Chương">Th Pháp Chương</option>
+				<option value="Th Pháp Duyên">Th Pháp Duyên</option>
+				<option value="Th Pháp Trụ">Th Pháp Trụ</option>
+				<option value="Th Pháp Đăng">Th Pháp Đăng</option>
+				<option value="Th Pháp Hạnh">Th Pháp Hạnh</option>
+				<option value="Th Pháp Độ">Th Pháp Độ</option>
+				<option value="Th Pháp Huệ">Th Pháp Huệ</option>
+				<option value="Th Pháp Tuệ">Th Pháp Tuệ</option>
+
+				
             </select>
-            
-            <button onclick="handleLogin()" class="w-full btn-action bg-indigo text-lg">
-                Xác nhận & Bắt đầu
-            </button>
+            <button onclick="handleLogin()" class="w-full btn-action bg-indigo text-lg">Xác nhận & Bắt đầu</button>
         </div>
     </div>
 
@@ -229,79 +182,153 @@
         <h2 onclick="renderDashboard()">
             <i class="fas fa-shapes mr-2"></i> QuizMaster
         </h2>
-        
-        <ul id="sidebar-list">
-            </ul>
-        
+        <ul id="sidebar-list"></ul>
         <div style="margin-top: auto; padding-top: 20px; text-align: center; font-size: 0.8rem; opacity: 0.6; border-top: 1px solid #ffffff33;">
-            <p>Phiên bản Offline V3</p>
+            <p>Phiên bản Offline V3.2</p>
         </div>
     </div>
 
     <div id="main-content">
         <div class="top-bar">
-            <div>
-                <h1 class="text-xl font-bold text-gray-700" id="page-title">Trang Chủ</h1>
-            </div>
+            <div><h1 class="text-xl font-bold text-gray-700" id="page-title">Trang Chủ</h1></div>
             <div class="flex items-center">
                 <div class="mr-3 text-right">
                     <p class="text-sm text-gray-500">Xin chào,</p>
                     <p class="font-bold text-indigo-600" id="user-display">Khách</p>
                 </div>
-                <div class="bg-indigo-100 p-2 rounded-full text-indigo-600">
-                    <i class="fas fa-user"></i>
-                </div>
+                <div class="bg-indigo-100 p-2 rounded-full text-indigo-600"><i class="fas fa-user"></i></div>
             </div>
         </div>
-
-        <div id="dynamic-area">
-            </div>
+        <div id="dynamic-area"></div>
     </div>
 
     <script>
-        // --- DỮ LIỆU ---
+        // =========================================================================
+        // KHU VỰC CẤU HÌNH DỮ LIỆU (BẠN CHỈ CẦN SỬA Ở ĐÂY)
+        // =========================================================================
+
+        // 1. DANH SÁCH ĐỀ THI (MENU BÊN TRÁI)
+        const LIST_CONTESTS = [
+            { id: 1, name: "ATGT: Đỗ xe (15 câu)", duration: 8, active: true },
+            { id: 2, name: "ATGT: Lùi xe (15 câu)", duration: 8, active: true },
+			{ id: 3, name: "ATGT: Leo dốc (16 câu)", duration: 8, active: true },
+			{ id: 4, name: "ATGT: Trước khi vận hành (25 câu)", duration: 12, active: true },
+            { id: 900, name: "...", duration: 15, active: false }
+        ];
+
+        // 2. NGÂN HÀNG CÂU HỎI (MAP VỚI ID Ở TRÊN)
+        const QUESTION_BANK = {
+            
+            // --- BỘ CÂU HỎI CHO ID = 1 ---
+            1: [
+				{ id: 1, question_text: "Theo quy định, khi đỗ xe lề đường, bánh xe gần nhất không được cách lề đường quá bao nhiêu?", option_a: "0.2 mét (20cm).", option_b: "0.25 mét (25cm).", option_c: "0.3 mét (30cm).", option_d: "0.5 mét (50cm).", correct_answer: "B", explanation: "Luật quy định bánh xe gần nhất không được cách lề đường quá 0.25 mét (25cm)." },
+				{ id: 2, question_text: "Hành động mở cửa xe bằng tay phải khi ngồi ghế lái (kỹ thuật Dutch Reach) giúp ngăn ngừa tai nạn gì?", option_a: "Kẹt tay vào cửa.", option_b: "Hư hỏng chốt cửa.", option_c: "Người đi xe máy/xe đạp từ phía sau tông vào cửa xe.", option_d: "Quên chìa khóa trong xe.", correct_answer: "C", explanation: "Dùng tay phải mở cửa trái buộc thân người phải xoay lại và mắt nhìn ra phía sau, tránh va chạm với xe đi tới." },
+				{ id: 3, question_text: "Tại sao không nên đánh lái chết (xoay vô lăng khi xe đứng yên) để ghép xe vào chỗ đỗ?", option_a: "Làm mòn lốp nhanh và hại hệ thống thước lái.", option_b: "Tốn nhiên liệu.", option_c: "Gây tiếng ồn khó chịu.", option_d: "Làm nóng động cơ.", correct_answer: "A", explanation: "Xoay vô lăng tại chỗ quá nhiều khi cố ghép xe vào chỗ hẹp sẽ làm mòn lốp nhanh và hại hệ thống thước lái." },
+				{ id: 4, question_text: "Rủi ro nguy hiểm nhất (dù hiếm gặp) khi đỗ xe đè lên nắp cống hoặc hố ga là gì?", option_a: "Mất nắp cống.", option_b: "Bị phạt nguội.", option_c: "Khí metan từ cống gặp nhiệt độ cao từ ống xả gây cháy nổ.", option_d: "Xe bị lún xuống hố.", correct_answer: "C", explanation: "Khí metan từ cống tích tụ gặp tia lửa điện hoặc nhiệt từ gầm xe (ống xả nóng) có nguy cơ gây cháy nổ." },
+				{ id: 5, question_text: "Khi đỗ xe ở nơi thiếu sáng và chiếm một phần đường xe chạy, lái xe cần làm gì để đảm bảo an toàn?", option_a: "Bật đèn pha.", option_b: "Bật đèn hậu hoặc đèn cảnh báo (hazard).", option_c: "Đặt vật cản phía sau xe.", option_d: "Tắt toàn bộ đèn để tiết kiệm bình.", correct_answer: "B", explanation: "Nếu đỗ xe chiếm một phần đường nơi thiếu sáng, cần bật đèn hậu hoặc đèn cảnh báo để xe khác nhận diện từ xa." },
+				{ id: 6, question_text: "Vị trí nào sau đây KHÔNG được phép đỗ xe?", option_a: "Cách lề đường 20cm.", option_b: "Nơi có biển báo cho phép đỗ.", option_c: "Trên miệng cống thoát nước, hầm đường dây điện thoại.", option_d: "Khu vực đường vắng vẻ.", correct_answer: "C", explanation: "Không được đỗ chắn các vị trí nhạy cảm như miệng cống thoát nước, hầm đường dây điện thoại/điện cao thế." },
+				{ id: 7, question_text: "Tại sao cần tránh đỗ xe gần các vật liệu như rơm rạ, lá cây khô, giấy?", option_a: "Sợ làm bẩn xe.", option_b: "Nhiệt độ từ ống xả (pô) nóng có thể làm bén lửa gây cháy.", option_c: "Dễ bị chuột chui vào xe.", option_d: "Khó quan sát khi lùi ra.", correct_answer: "B", explanation: "Những vật liệu dễ bắt cháy này nếu ở gần ống xả nóng sẽ tiềm ẩn nguy cơ sinh cháy." },
+				{ id: 8, question_text: "Lỗi đỗ xe ngược chiều lưu thông (đánh lái sang lề trái đường hai chiều) mang lại rủi ro gì?", option_a: "Không có rủi ro nếu đường vắng.", option_b: "Chỉ bị nhắc nhở nhẹ.", option_c: "Vi phạm luật giao thông và nguy hiểm khi lái xe ra lại làn đường.", option_d: "Giúp ra vào xe dễ hơn.", correct_answer: "C", explanation: "Đây là lỗi vi phạm luật và rất nguy hiểm khi bạn lái xe ra lại làn đường do ngược chiều quan sát." },
+				{ id: 9, question_text: "Rủi ro chính khi đỗ xe dưới tán cây lớn là gì?", option_a: "Cành cây gãy rơi trúng, nhựa cây hoặc phân chim làm hỏng sơn.", option_b: "Xe bị quá lạnh.", option_c: "Mất sóng radio.", option_d: "Bị che khuất tầm nhìn.", correct_answer: "A", explanation: "Cây có thể rụng cành khô, nhựa cây ăn mòn sơn, hoặc chim đậu bên trên làm bẩn xe." },
+				{ id: 10, question_text: "Nguyên nhân vụ cháy gần 30 ô tô tại New Zealand được đề cập trong tài liệu là do đâu?", option_a: "Chập điện trong xe.", option_b: "Đốt rác gần bãi xe.", option_c: "Ống xả nóng của xe bán tải chạm vào cỏ khô.", option_d: "Xăng rò rỉ gặp tàn thuốc.", correct_answer: "C", explanation: "Đám cháy bắt nguồn từ ống xả nóng của một chiếc bán tải sau khi lùi vào chỗ đỗ, chạm cỏ khô." },
+				{ id: 11, question_text: "Tại sao luôn phải kéo phanh tay (hoặc về P) khi đỗ xe, kể cả khi đường nhìn có vẻ bằng phẳng?", option_a: "Để tiết kiệm nhiên liệu.", option_b: "Đường thực tế có thể hơi dốc, xe có thể tự trôi gây tai nạn.", option_c: "Để hệ thống điện tắt hoàn toàn.", option_d: "Để khóa vô lăng.", correct_answer: "B", explanation: "Đường nhìn có vẻ bằng phẳng nhưng thực tế có thể hơi dốc. Nếu quên phanh tay, xe có thể tự trôi tự do." },
+				{ id: 12, question_text: "Việc không gập gương chiếu hậu khi đỗ xe lề đường dễ dẫn đến hậu quả gì?", option_a: "Hao bình ắc quy.", option_b: "Gương bị mờ do sương.", option_c: "Xe máy lách qua va quẹt làm gãy gương hoặc xước sơn.", option_d: "Bị cảnh sát phạt lỗi không gập gương.", correct_answer: "C", explanation: "Gương chiếu hậu chìa ra ngoài nhiều nhất, nếu không gập vào rất dễ bị xe máy va phải." },
+				{ id: 13, question_text: "Văn hóa đỗ xe tối thiểu cần thực hiện để tránh bị xích mích hoặc tạt sơn là gì?", option_a: "Để lại danh thiếp công ty.", option_b: "Để lại số điện thoại liên hệ trên kính lái.", option_c: "Mở hé cửa kính.", option_d: "Bật nhạc nhỏ trong xe.", correct_answer: "B", explanation: "Để lại số điện thoại giúp người khác liên hệ khi khẩn cấp hoặc xe chắn lối, tránh gây bức xúc dẫn đến phá hoại xe." },
+				{ id: 14, question_text: "Bạn KHÔNG được đỗ xe trong phạm vi bao nhiêu mét tính từ mép đường giao nhau (ngã ba, ngã tư)?", option_a: "Trong phạm vi 5 mét.", option_b: "Trong phạm vi 10 mét.", option_c: "Trong phạm vi 2 mét.", option_d: "Trong phạm vi 15 mét.", correct_answer: "A", explanation: "Không đỗ xe nơi đường giao nhau hoặc che khuất biển báo hiệu đường bộ trong phạm vi 5m." },
+				{ id: 15, question_text: "Tại sao cần tránh chạm vào ống xả ngay khi xe vừa tắt máy?", option_a: "Sợ làm bẩn quần áo.", option_b: "Chi tiết này rất nóng, có thể gây bỏng nặng.", option_c: "Dễ làm hỏng bộ trung hòa khí thải.", option_d: "Sợ bị điện giật.", correct_answer: "B", explanation: "Không dùng tay chạm vào ống xả khi động cơ đang làm việc hoặc vừa tắt máy vì rất nóng, có thể dẫn đến bỏng nặng." },
+				],
+
+            // --- BỘ CÂU HỎI CHO ID = 2 ---
+            2: [
+				{ id: 16, question_text: "Camera lùi thường sử dụng ống kính loại nào và nhược điểm của nó là gì?", option_a: "Ống kính tele, làm vật thể trông gần hơn thực tế.", option_b: "Ống kính góc rộng (fisheye), gây biến dạng hình ảnh, khiến vật thể trông xa hơn thực tế.", option_c: "Ống kính hồng ngoại, không nhìn thấy màu sắc.", option_d: "Ống kính thường, không có nhược điểm.", correct_answer: "B", explanation: "Camera lùi thường sử dụng ống kính góc rộng (fisheye) gây biến dạng hình ảnh, khiến vật thể trông xa hơn thực tế." },
+				{ id: 17, question_text: "Tại sao cảm biến lùi đôi khi không phát ra cảnh báo dù có vật cản?", option_a: "Do vật cản quá lớn.", option_b: "Do vật cản di chuyển nhanh.", option_c: "Do vật cản quá thấp (gờ giảm tốc, hố ga) hoặc quá mỏng (cọc sắt nhỏ).", option_d: "Do trời nắng gắt.", correct_answer: "C", explanation: "Cảm biến lùi có thể không phát hiện được vật cản quá thấp (gờ giảm tốc, hố ga) hoặc quá mỏng (cọc sắt nhỏ)." },
+				{ id: 18, question_text: "Phương pháp quan sát nào được khuyến nghị để hạn chế tối đa điểm mù khi lùi xe?", option_a: "Chỉ nhìn màn hình camera lùi.", option_b: "Chỉ nhìn gương chiếu hậu.", option_c: "Kết hợp '3 trong 1': Nhìn màn hình + Nhìn gương chiếu hậu + Ngoái đầu lại.", option_d: "Nhờ người khác xi nhan.", correct_answer: "C", explanation: "Hãy kết hợp '3 trong 1': Nhìn màn hình + Nhìn gương chiếu hậu + Ngoái đầu lại (hoặc liếc qua vai) để bao quát toàn cảnh." },
+				{ id: 19, question_text: "Tại sao số lùi (R) lại nguy hiểm hơn số 1 nếu không kiểm soát tốt tốc độ?", option_a: "Vì số lùi khó vào hơn.", option_b: "Vì số lùi có lực kéo (momen xoắn) rất khỏe, xe sẽ vọt nhanh hơn số 1.", option_c: "Vì số lùi tiêu tốn nhiều nhiên liệu hơn.", option_d: "Vì số lùi không có phanh.", correct_answer: "B", explanation: "Số lùi (R) thường có lực kéo (momen xoắn) rất khỏe, xe sẽ vọt nhanh hơn số 1." },
+				{ id: 20, question_text: "Nguyên tắc 'Rà phanh' khi lùi xe số tự động là như thế nào?", option_a: "Luôn đặt chân ở bàn đạp ga.", option_b: "Đạp phanh và ga cùng lúc.", option_c: "Chỉ cần nhả phanh là xe tự lùi, luôn đặt chân ở bàn đạp phanh, hạn chế dùng ga.", option_d: "Về số N để xe tự trôi.", correct_answer: "C", explanation: "Với xe số tự động, chỉ cần nhả phanh là xe đã tự lùi. Cần rà phanh để kiểm soát tốc độ." },
+				{ id: 21, question_text: "Khi đánh lái sang trái để lùi đuôi xe về bên trái, mũi xe sẽ di chuyển về hướng nào?", option_a: "Mũi xe cũng sang trái.", option_b: "Mũi xe đứng yên.", option_c: "Mũi xe văng sang bên phải.", option_d: "Mũi xe lùi thẳng.", correct_answer: "C", explanation: "Khi bạn đánh lái sang trái để lùi đuôi về bên trái, mũi xe sẽ văng sang bên phải (và ngược lại)." },
+				{ id: 22, question_text: "Sai lầm 'đánh lái quá sớm' khi xe chưa ra khỏi chuồng đỗ gây ra hậu quả gì?", option_a: "Xe không vào được chuồng.", option_b: "Làm sườn xe cạ vào xe hoặc vật cản bên cạnh.", option_c: "Xe bị chết máy.", option_d: "Gãy gương chiếu hậu.", correct_answer: "B", explanation: "Đánh lái quá sớm khi xe chưa ra khỏi 'chuồng' sẽ làm sườn xe cạ vào xe bên cạnh." },
+				{ id: 23, question_text: "Tại sao không nên mở cửa xe để nhìn bánh sau khi đang lùi?", option_a: "Gây mất thẩm mỹ.", option_b: "Tốn điện đèn trần.", option_c: "Cửa va phải vật cản sẽ bật ngược lại gây thương tích hoặc hỏng cửa, giảm độ cứng khung xe.", option_d: "Xe không cho phép lùi khi mở cửa.", correct_answer: "C", explanation: "Nếu cửa va phải vật cản, nó sẽ bật ngược lại gây thương tích hoặc hỏng cửa; ngoài ra làm giảm độ cứng vững của khung xe." },
+				{ id: 24, question_text: "Hành vi nào sau đây là TUYỆT ĐỐI CẤM trên đường cao tốc?", option_a: "Chuyển làn đường.", option_b: "Lùi xe.", option_c: "Bật đèn xi nhan.", option_d: "Đi vào làn khẩn cấp khi xe hỏng.", correct_answer: "B", explanation: "Lùi xe trên đường cao tốc là hành vi tuyệt đối cấm và cực kỳ nguy hiểm, có thể gây tai nạn thảm khốc." },
+				{ id: 25, question_text: "Để tránh sai lầm do chủ quan khi lùi ở nơi lạ hoặc khuất tầm nhìn, tài xế nên làm gì?", option_a: "Cứ lùi từ từ.", option_b: "Bấm còi to.", option_c: "Xuống xe ngó trước kiểm tra địa hình.", option_d: "Hỏi người dân xung quanh.", correct_answer: "C", explanation: "Không xuống xe ngó trước là sai lầm chủ quan. Cần kiểm tra địa hình trước khi lùi ở nơi lạ." },
+				{ id: 26, question_text: "Công thức '3 Kiểm - 1 Chậm' để lùi xe an toàn là gì?", option_a: "Kiểm tra xe, Kiểm tra đường, Kiểm tra người - Lùi chậm.", option_b: "Kiểm soát không gian, Kiểm soát tầm nhìn, Kiểm soát đầu xe - Luôn lùi chậm.", option_c: "Kiểm tra gương, Kiểm tra đèn, Kiểm tra còi - Ga chậm.", option_d: "Kiểm soát tốc độ, Kiểm soát hướng, Kiểm soát phanh - Đánh lái chậm.", correct_answer: "B", explanation: "Quy tắc: Kiểm soát không gian, Kiểm soát tầm nhìn, Kiểm soát đầu xe và Luôn lùi chậm." },
+				{ id: 27, question_text: "Việc dán phim cách nhiệt quá tối ảnh hưởng như thế nào khi lùi xe vào ban đêm?", option_a: "Không ảnh hưởng gì.", option_b: "Giúp giảm chói đèn xe sau.", option_c: "Làm giảm đáng kể khả năng quan sát qua gương.", option_d: "Giúp xe mát hơn.", correct_answer: "C", explanation: "Vào ban đêm, việc dán phim cách nhiệt quá tối sẽ làm giảm đáng kể khả năng quan sát qua gương." },
+				{ id: 28, question_text: "Khi lùi xe, nếu cảm thấy 'loạn' hướng bánh xe (không biết bánh đang thẳng hay méo), nguyên nhân thường do đâu?", option_a: "Vô lăng bị hỏng.", option_b: "Kỹ năng định hình hướng bánh xe chưa tốt (thường gặp ở tài xế mới).", option_c: "Lốp xe quá mòn.", option_d: "Đường quá trơn.", correct_answer: "B", explanation: "Tài xế mới thường bị loạn, không biết bánh xe đang thẳng hay đang méo khi lùi." },
+				{ id: 29, question_text: "Nếu lỡ đi quá lối ra trên đường cao tốc, bạn cần xử lý thế nào?", option_a: "Dừng lại và lùi về lối ra.", option_b: "Quay đầu xe chạy ngược chiều.", option_c: "Đi tiếp đến lối ra sau.", option_d: "Nhờ xe cứu hộ kéo về.", correct_answer: "C", explanation: "Nếu đi quá lối ra, hãy đi tiếp đến lối ra sau. Tuyệt đối không lùi xe." },
+				{ id: 30, question_text: "Tại sao cần 'Kiểm soát đầu xe' khi đang lùi?", option_a: "Để tránh va chạm phía trước khi mũi xe văng sang một bên lúc đánh lái.", option_b: "Để xem đèn pha có sáng không.", option_c: "Để nhìn biển số xe.", option_d: "Để kiểm tra lốp trước.", correct_answer: "A", explanation: "Khi đánh lái lùi, mũi xe sẽ văng, nếu không để ý mũi xe sẽ quẹt vào chướng ngại vật." },
+				],
+              
+            3: [
+				{ id: 31, question_text: "Lỗi 'bám đuôi xe trước quá sát' khi leo dốc gây ra nguy hiểm gì lớn nhất?", option_a: "Xe trước xả khói làm mờ tầm nhìn.", option_b: "Xe trước có thể bị tuột dốc hoặc phanh gấp khiến bạn không kịp xử lý.", option_c: "Động cơ xe bạn bị nóng do hút khí thải nóng.", option_d: "Xe bạn sẽ tiêu tốn nhiều nhiên liệu hơn.", correct_answer: "B", explanation: "Xe phía trước có thể bị tuột dốc (trôi ngược lại) nếu tài xế xử lý kém, hoặc họ phải phanh gấp; nếu không giữ khoảng cách, bạn sẽ không kịp xử lý." },
+				{ id: 32, question_text: "Tại sao không nên vượt xe ở đoạn gần đỉnh dốc?", option_a: "Vì xe sẽ bị mất đà.", option_b: "Vì gió trên đỉnh dốc rất mạnh.", option_c: "Vì đây là 'điểm mù', không thấy xe ngược chiều đi lên từ phía bên kia.", option_d: "Vì luật giao thông cấm vượt ở mọi con dốc.", correct_answer: "C", explanation: "Đây là 'điểm mù' cực lớn vì bạn không thể thấy xe đi ngược chiều đang lao lên từ phía bên kia." },
+				{ id: 33, question_text: "Hành động đạp thốc ga (đạp lút cán) khi xe có dấu hiệu đuối sức leo dốc dẫn đến hậu quả gì?", option_a: "Xe tăng tốc ngay lập tức.", option_b: "Vòng tua máy tăng vọt, gây nóng máy, có thể trượt bánh nhưng xe không tăng tốc được bao nhiêu.", option_c: "Giúp làm mát động cơ nhờ gió vào nhiều hơn.", option_d: "Tiết kiệm nhiên liệu hơn về số thấp.", correct_answer: "B", explanation: "Hành động này làm vòng tua máy tăng vọt, gây nóng máy nhanh chóng nhưng xe vẫn không tăng tốc được bao nhiêu, thậm chí gây trượt bánh." },
+				{ id: 34, question_text: "Với các dòng xe động cơ nhỏ (hạng A, xe cũ), nên làm gì để tăng công suất khi leo dốc dựng đứng?", option_a: "Bật đèn pha.", option_b: "Tắt điều hòa (A/C).", option_c: "Mở hé cửa kính.", option_d: "Bật nhạc to để phấn khích.", correct_answer: "B", explanation: "Việc bật điều hòa hết công suất khi leo dốc dựng đứng sẽ 'ngốn' một phần công suất đáng kể; tắt đi giúp xe đỡ yếu." },
+				{ id: 35, question_text: "Hậu quả của việc chọn số quá cao (số 4, 5) để leo dốc cao với xe số sàn là gì?", option_a: "Xe chạy êm hơn.", option_b: "Tiết kiệm xăng tối đa.", option_c: "Máy bị ì, rung giật và dễ chết máy, làm mất trợ lực lái và phanh.", option_d: "Tăng tuổi thọ hộp số.", correct_answer: "C", explanation: "Máy bị ì, rung giật và rất dễ chết máy giữa dốc. Khi chết máy, xe mất trợ lực lái và phanh, rất nguy hiểm ." },
+				{ id: 36, question_text: "Thói quen 'rà côn' (âm côn) liên tục khi leo dốc gây hại gì cho xe?", option_a: "Giúp xe leo dốc mượt mà hơn.", option_b: "Cháy lá côn, gây mùi khét và có thể hỏng bộ ly hợp ngay lập tức.", option_c: "Giúp tiết kiệm nhiên liệu.", option_d: "Làm mát hộp số.", correct_answer: "B", explanation: "Rà côn quá nhiều làm cháy lá côn, gây mùi khét lẹt và có thể làm hỏng bộ ly hợp ngay lập tức." },
+				{ id: 37, question_text: "Nguyên nhân chính khiến xe số sàn bị trôi ngược khi đề-pa lên dốc là gì?", option_a: "Quên đạp ga.", option_b: "Nhả côn chưa tới điểm bám đã vội nhả phanh tay/chân.", option_c: "Xe quá nặng.", option_d: "Hỏng phanh tay.", correct_answer: "B", explanation: "Thao tác nhả côn và đạp ga không khớp (nhả côn chưa tới điểm bám đã nhả phanh tay/chân) khiến xe trôi tự do." },
+				{ id: 38, question_text: "Lỗi 'Sang số giữa dốc khi tua máy chưa đủ' ở xe số sàn gây hậu quả gì?", option_a: "Xe tăng tốc nhanh hơn.", option_b: "Xe bị mất đà đột ngột và tụt dốc nhanh chóng.", option_c: "Hộp số bị kẹt.", option_d: "Vô lăng bị khóa.", correct_answer: "B", explanation: "Cắt côn để sang số khi xe đang leo dốc nhưng chưa đủ đà khiến xe bị mất đà đột ngột và tụt dốc nhanh chóng." },
+				{ id: 39, question_text: "Với xe số tự động, việc để cần số ở vị trí D (Drive) khi leo dốc quá dài hoặc quá đứng có thể gây ra vấn đề gì?", option_a: "Xe leo dốc nhanh hơn bình thường.", option_b: "Hộp số nhảy số liên tục, gây nóng và sôi dầu hộp số.", option_c: "Động cơ tự động tắt để bảo vệ.", option_d: "Phanh xe bị bó cứng.", correct_answer: "B", explanation: "Chỉ để số D có thể khiến hộp số nhảy số liên tục (lên xuống giữa các cấp) để tìm lực kéo phù hợp, làm hộp số bị nóng, sôi dầu." },
+				{ id: 40, question_text: "Cách khắc phục khi xe số tự động bị nhảy số liên tục (lên xuống số) lúc leo dốc là gì?", option_a: "Chuyển sang chế độ bán tự động (M+/-) hoặc các số thấp (L, 2, 1).", option_b: "Dừng lại chờ máy nguội.", option_c: "Đạp ga mạnh hơn.", option_d: "Chuyển về số N và thả trôi.", correct_answer: "A", explanation: "Nên chuyển sang chế độ bán tự động (M+/-), hoặc các số thấp (L, 2, 1) để giữ tua máy cao và lực kéo khỏe." },
+				{ id: 41, question_text: "Tại sao đạp ga quá mạnh (đạp thốc) khi khởi hành ngang dốc với xe số tự động lại nguy hiểm?", option_a: "Xe dễ chết máy.", option_b: "Xe số tự động có độ trễ, đạp thốc ga khiến xe chồm lên bất ngờ gây mất kiểm soát.", option_c: "Hộp số không chuyển số kịp.", option_d: "Xe bị trôi ngược.", correct_answer: "B", explanation: "Xe số tự động có độ trễ nhất định. Đạp thốc ga có thể khiến xe chồm lên bất ngờ, mất kiểm soát lái." },
+				{ id: 68, question_text: "Bộ phận nào trong hộp số tự động dễ bị gãy hoặc kẹt nếu đỗ xe hẳn trên dốc mà không kéo phanh tay (chỉ về P)?", option_a: "Bánh răng số 1.", option_b: "Chốt hãm hộp số (Parking Pawl).", option_c: "Trục dẫn động.", option_d: "Lá côn.", correct_answer: "B", explanation: "Chỉ về P mà không kéo phanh tay sẽ dồn toàn bộ trọng lượng xe lên chốt hãm hộp số (Parking Pawl), gây kẹt số hoặc gãy chốt." },
+				{ id: 69, question_text: "Nếu kim nhiệt độ động cơ báo quá nóng khi đang leo dốc, bạn nên xử lý thế nào?", option_a: "Tắt máy ngay lập tức để làm nguội.", option_b: "Tìm chỗ an toàn dừng nghỉ, để máy nổ cầm chừng (không tắt máy ngay).", option_c: "Tăng tốc để gió làm mát nhanh hơn.", option_d: "Đổ nước lạnh trực tiếp vào máy.", correct_answer: "B", explanation: "Nếu quá nóng, tìm chỗ an toàn dừng nghỉ (không tắt máy ngay, để máy nổ cầm chừng) để nước làm mát tiếp tục lưu thông giải nhiệt." },
+				{ id: 70, question_text: "Nguyên tắc 'Lên số nào, xuống số đó' mang lại lợi ích gì quan trọng nhất khi xuống dốc?", option_a: "Giúp xe chạy nhanh hơn.", option_b: "Tận dụng phanh động cơ, tránh việc phải rà phanh liên tục gây cháy bố phanh.", option_c: "Tiết kiệm nhiên liệu tối đa.", option_d: "Giúp động cơ mát hơn.", correct_answer: "B", explanation: "Nếu leo dốc dùng số thấp, khi xuống cũng nên dùng số đó để tận dụng phanh động cơ, tránh rà phanh cháy bố." },
+				{ id: 71, question_text: "Khi dừng chờ giữa dốc (chưa tắt máy), lái xe nên làm gì để đảm bảo an toàn?", option_a: "Chỉ cần đạp phanh chân.", option_b: "Về N và thả trôi.", option_c: "Phối hợp kéo phanh tay để tránh xe bị trôi nếu lơ là chân phanh.", option_d: "Tắt máy ngay để tiết kiệm xăng.", correct_answer: "C", explanation: "Khi dừng giữa dốc, nên phối hợp phanh tay. Nếu lơ là lỏng chân phanh (khi chỉ đạp phanh chân), xe sẽ trôi." },
+				],
+            4: 	[
+				{ id: 43, question_text: "Trình tự kiểm tra xe được khuyến nghị trong tài liệu là gì?", option_a: "Từ trong ra ngoài.", option_b: "Từ khoang máy đến nội thất.", option_c: "Từ ngoài vào trong.", option_d: "Tùy ý người lái.", correct_answer: "C", explanation: "Danh sách các bước cần làm được chia theo trình tự từ ngoài vào trong ." },
+				{ id: 44, question_text: "Khi quan sát lốp xe bằng mắt thường, bạn cần tìm những dấu hiệu hư hỏng nào?", option_a: "Lốp bị dính bùn đất.", option_b: "Gai lốp bị mòn đều.", option_c: "Lốp non hơi, bị rách, nứt hoặc phồng.", option_d: "Màu sắc của lốp bị phai.", correct_answer: "C", explanation: "Kiểm tra bằng mắt xem lốp có bị non hơi, bị rách, nứt hoặc phồng không ." },
+				{ id: 45, question_text: "Ngoài việc quan sát, hành động vật lý nào giúp kiểm tra độ căng của lốp xe nhanh chóng?", option_a: "Dùng tay ấn mạnh vào lốp.", option_b: "Đá nhẹ vào lốp.", option_c: "Dùng búa gõ vào lốp.", option_d: "Ngồi lên lốp xe.", correct_answer: "B", explanation: "Đừng quên đá nhẹ vào lốp để kiểm tra độ căng ." },
+				{ id: 46, question_text: "Khu vực nào dưới đây thường bị bỏ quên nhưng cần kiểm tra kỹ để tránh trẻ em hoặc vật nuôi ẩn nấp?", option_a: "Trên nắp ca-pô.", option_b: "Trong cốp xe.", option_c: "Dưới gầm xe.", option_d: "Trên nóc xe.", correct_answer: "C", explanation: "Nhìn kỹ phía trước, sau và đặc biệt là dưới gầm xe để đảm bảo không có trẻ em, vật nuôi ." },
+				{ id: 47, question_text: "Khi kiểm tra kính và đèn xe, yêu cầu đặt ra là gì?", option_a: "Kính phải được dán phim cách nhiệt.", option_b: "Đèn phải được độ sáng hơn.", option_c: "Kính/gương sạch, không mờ/nứt; ốp đèn không vỡ.", option_d: "Kính phải chống lóa hoàn toàn.", correct_answer: "C", explanation: "Đảm bảo kính lái, kính hậu, gương sạch sẽ, không mờ/nứt; ốp đèn không bị vỡ ." },
+				{ id: 48, question_text: "Việc kiểm tra các vết trầy xước trên thân xe đặc biệt hữu ích trong trường hợp nào?", option_a: "Khi xe mới mua.", option_b: "Khi đỗ xe nơi công cộng hoặc đi thuê xe.", option_c: "Khi rửa xe tại nhà.", option_d: "Khi đi xe vào ban đêm.", correct_answer: "B", explanation: "Lướt nhanh xem có vết trầy xước mới không, rất hữu ích nếu bạn đỗ xe nơi công cộng hoặc đi thuê xe ." },
+				{ id: 49, question_text: "Nếu chỉ đi lại hàng ngày trong phố, tần suất kiểm tra khoang máy nên là bao lâu?", option_a: "Mỗi ngày.", option_b: "Mỗi tuần một lần.", option_c: "Mỗi tháng một lần.", option_d: "3 tháng một lần.", correct_answer: "B", explanation: "Nếu chỉ đi lại hàng ngày trong phố, nên kiểm tra khoang máy mỗi tuần một lần ." },
+				{ id: 50, question_text: "Khi kiểm tra dầu động cơ bằng que thăm, dấu hiệu nào cho thấy cần bảo dưỡng ngay?", option_a: "Dầu có màu vàng mật ong.", option_b: "Dầu nằm ở mức Max.", option_c: "Dầu đen kịt hoặc mức dầu quá thấp.", option_d: "Dầu còn ấm.", correct_answer: "C", explanation: "Dầu đen kịt hoặc quá thấp là dấu hiệu cần bảo dưỡng ." },
+				{ id: 51, question_text: "Khi kiểm tra ắc quy trong khoang máy, bạn cần chú ý điều gì ở các cọc bình?", option_a: "Cọc bình có được bọc nhựa không.", option_b: "Cọc bình có bị rỉ sét hay lỏng lẻo không.", option_c: "Kích thước của bình ắc quy.", option_d: "Nhãn hiệu của bình ắc quy.", correct_answer: "B", explanation: "Nhìn xem các cọc bình có bị rỉ sét hay lỏng lẻo không ." },
+				{ id: 52, question_text: "Tư thế chân đúng khi điều chỉnh ghế lái là gì?", option_a: "Chân duỗi thẳng tắp khi đạp hết phanh.", option_b: "Đầu gối chạm vào vô lăng.", option_c: "Chân đạp hết hành trình phanh/côn mà đầu gối vẫn hơi gập nhẹ.", option_d: "Chân đặt vuông góc với sàn xe.", correct_answer: "C", explanation: "Điều chỉnh độ xa/gần sao cho chân đạp hết hành trình phanh/côn mà đầu gối vẫn hơi gập nhẹ ." },
+				{ id: 53, question_text: "Gương chiếu hậu giữa (trong xe) cần được điều chỉnh như thế nào?", option_a: "Thấy được khuôn mặt người lái.", option_b: "Bao quát trọn vẹn kính sau.", option_c: "Thấy được hàng ghế sau.", option_d: "Thấy được trần xe.", correct_answer: "B", explanation: "Gương giữa cần bao quát trọn vẹn kính sau ." },
+				{ id: 54, question_text: "Tại sao chỉ nên để thân xe chiếm 1/4 diện tích gương chiếu hậu 2 bên?", option_a: "Để nhìn thấy bánh xe sau.", option_b: "Để xe trông đẹp hơn.", option_c: "Để quan sát làn đường bên cạnh nhằm hạn chế điểm mù.", option_d: "Để tránh bị chói đèn xe sau.", correct_answer: "C", explanation: "Phần còn lại (3/4) dùng để quan sát làn đường bên cạnh để hạn chế điểm mù ." },
+				{ id: 55, question_text: "Quy định về thắt dây an toàn được nêu trong tài liệu là gì?", option_a: "Chỉ bắt buộc với người lái.", option_b: "Chỉ bắt buộc với ghế trước.", option_c: "Bắt buộc với tất cả hành khách trên xe.", option_d: "Chỉ bắt buộc khi đi đường cao tốc.", correct_answer: "C", explanation: "Thắt dây an toàn là bước bắt buộc, yêu cầu tất cả hành khách trên xe cùng thực hiện ." },
+				{ id: 56, question_text: "Trước khi nổ máy, phanh tay cần ở trạng thái nào?", option_a: "Đã hạ xuống.", option_b: "Đang ở vị trí khóa.", option_c: "Kéo hờ một nửa.", option_d: "Không quan trọng.", correct_answer: "B", explanation: "Đảm bảo phanh tay đang ở vị trí khóa trước khi nổ máy ." },
+				{ id: 57, question_text: "Khi bật điện xe (nấc ACC/On) nhưng chưa nổ máy, trạng thái đèn trên táp-lô như thế nào là bình thường?", option_a: "Tất cả đèn đều tắt.", option_b: "Chỉ đèn ắc quy sáng.", option_c: "Tất cả đèn sẽ sáng.", option_d: "Đèn nhấp nháy liên tục.", correct_answer: "C", explanation: "Khi bật điện (ACC/On), tất cả đèn sẽ sáng ." },
+				{ id: 58, question_text: "16. Sau khi nổ máy vài giây, điều gì phải xảy ra với các đèn cảnh báo (Check Engine, Ắc quy...)?", option_a: "Chúng phải tắt hết.", option_b: "Chúng chuyển sang màu xanh.", option_c: "Chúng vẫn sáng để báo hiệu hoạt động.", option_d: "Chúng nhấp nháy chậm.", correct_answer: "A", explanation: "Sau khi nổ máy vài giây, các đèn cảnh báo phải tắt hết ." },
+				{ id: 59, question_text: "Nếu sau khi nổ máy mà đèn Check Engine vẫn sáng, điều này có nghĩa là gì?", option_a: "Động cơ đang hoạt động tốt.", option_b: "Xe đang gặp vấn đề ở bộ phận đó.", option_c: "Đèn báo hiệu xe sẵn sàng chạy.", option_d: "Do lỗi hiển thị, không cần lo lắng.", correct_answer: "B", explanation: "Nếu đèn nào còn sáng, xe đang gặp vấn đề ở bộ phận đó ." },
+				{ id: 60, question_text: "Khi kiểm tra nhiên liệu, bạn cần xem xét thông số nào?", option_a: "Giá xăng hiện tại.", option_b: "Kim xăng hoặc đồng hồ báo quãng đường còn đi được (Range).", option_c: "Dung tích bình xăng.", option_d: "Loại xăng xe đang dùng.", correct_answer: "B", explanation: "Kiểm tra kim xăng/đồng hồ báo quãng đường còn đi được (Range) xem có đủ cho hành trình không ." },
+				{ id: 61, question_text: "Cảm giác chân phanh như thế nào là an toàn khi kiểm tra tại chỗ?", option_a: "Cứng đơ không đạp được.", option_b: "Hẫng như đạp vào không khí.", option_c: "Có độ đàn hồi.", option_d: "Phải đạp sát sàn mới ăn.", correct_answer: "C", explanation: "Đạp nhẹ chân phanh xem có độ đàn hồi không ." },
+				{ id: 62, question_text: "Nếu chân phanh có cảm giác 'hẫng' hoặc 'quá cứng', bạn nên làm gì?", option_a: "Vẫn di chuyển nhưng đi chậm.", option_b: "Bơm thêm dầu phanh rồi đi.", option_c: "Tuyệt đối không di chuyển.", option_d: "Đạp mạnh vài lần cho quen.", correct_answer: "C", explanation: "Nếu chân phanh bị hẫng hoặc quá cứng, tuyệt đối không di chuyển ." },
+				{ id: 63, question_text: "Các giấy tờ bắt buộc phải mang theo và còn hạn bao gồm những gì?", option_a: "Bằng lái, CMND/CCCD, Đăng ký xe.", option_b: "Bằng lái, Đăng ký xe, Bảo hiểm, Đăng kiểm.", option_c: "Bằng lái, Hộ khẩu, Bảo hiểm.", option_d: "Đăng ký xe, Bảo hiểm, Hóa đơn mua xe.", correct_answer: "B", explanation: "Giấy tờ bao gồm: Bằng lái, Đăng ký xe, Bảo hiểm, Đăng kiểm ." },
+				{ id: 64, question_text: "Về tâm thế người lái, tài liệu nhấn mạnh điều gì là 'tuyệt đối không'?", option_a: "Không được nói chuyện.", option_b: "Không được nghe nhạc to.", option_c: "Tuyệt đối không có nồng độ cồn.", option_d: "Không được uống cà phê.", correct_answer: "C", explanation: "Tâm thế: Tỉnh táo, không buồn ngủ và tuyệt đối không có nồng độ cồn ." },
+				{ id: 65, question_text: "Mẹo nhỏ dành cho xe đỗ qua đêm trước khi di chuyển là gì?", option_a: "Đạp ga mạnh vài lần để làm nóng máy.", option_b: "Để xe chạy không tải (garanti) 30-60 giây.", option_c: "Vừa nổ máy là vào số đi ngay.", option_d: "Bật điều hòa hết công suất ngay lập tức.", correct_answer: "B", explanation: "Sau khi nổ máy, hãy để xe chạy không tải (garanti) khoảng 30-60 giây ." },
+				{ id: 66, question_text: "Mục đích của việc để xe chạy không tải 30-60 giây buổi sáng là gì?", option_a: "Để tiết kiệm nhiên liệu.", option_b: "Để sạc đầy ắc quy.", option_c: "Để dầu nhớt kịp bơm lên bôi trơn các chi tiết máy.", option_d: "Để làm nóng khoang lái.", correct_answer: "C", explanation: "Để dầu nhớt kịp bơm lên bôi trơn các chi tiết máy trước khi vào số di chuyển ." },
+				{ id: 67, question_text: "Bước 'Cockpit Check' (Kiểm tra khi ngồi vào ghế lái) được đánh giá mức độ quan trọng như thế nào?", option_a: "Là bước phụ, có thể bỏ qua.", option_b: "Là bước quan trọng nhất để có tư thế lái chủ động.", option_c: "Chỉ quan trọng với người mới lái.", option_d: "Ít quan trọng hơn kiểm tra lốp xe.", correct_answer: "B", explanation: "Đây là bước quan trọng nhất để bạn có tư thế lái chủ động ." },
+
+				],
+            
+            // --- MUỐN THÊM ID = 3 THÌ COPY ĐOẠN DƯỚI DÁN VÀO ĐÂY ---
+            // , 3: [
+            //    { id: 999, question_text: "Câu hỏi mẫu?", option_a: "A", option_b: "B", option_c: "C", option_d: "D", correct_answer: "A", explanation: "..." }
+            // ]
+        };
+
+        // =========================================================================
+        // LOGIC HỆ THỐNG (KHÔNG CẦN SỬA DƯỚI NÀY TRỪ KHI MUỐN ĐỔI TÍNH NĂNG)
+        // =========================================================================
+
         let currentUser = "";
         let currentContestId = null;
         let quizAnswers = {};
-
-        const MOCK_CONTESTS = [
-            { id: 27, name: "ATGT: Kỹ năng Đỗ xe (20 câu)", duration: 20, active: true },
-            { id: 26, name: "ATGT: Kỹ thuật Lùi xe (18 câu)", duration: 60, active: false },
-            { id: 800, name: "Tiếng Anh: Danh Từ Đếm Được", duration: 45, active: false },
-            { id: 700, name: "Toán Học: Bài Toán Đố Thực Tế", duration: 20, active: false },
-            { id: 600, name: "Toán Học: Phép Tính Cơ Bản", duration: 30, active: false },
-            { id: 900, name: "Kiến thức Chung: Xã hội học", duration: 15, active: false }
-        ];
-
-        const MOCK_EXERCISES_ID27 = [
-            { id: 341, question_text: "Hành động nào sau đây 'mời gọi' kẻ gian đập kính trộm đồ?", option_a: "Dán phim cách nhiệt.", option_b: "Để ví tiền, điện thoại, laptop hớ hênh trên ghế phụ.", option_c: "Lắp khóa vô lăng.", option_d: "Gập gương chiếu hậu.", correct_answer: "B", explanation: "Để đồ giá trị nơi dễ nhìn thấy kích thích lòng tham của kẻ gian." },
-            { id: 340, question_text: "Để tránh rủi ro xe bị hư hại do môi trường, bạn nên TRÁNH đỗ xe ở đâu?", option_a: "Nơi có bóng mát nhân tạo.", option_b: "Dưới tán cây lớn (nguy cơ gãy cành) hoặc gần công trường.", option_c: "Trong hầm gửi xe.", option_d: "Nơi có camera an ninh.", correct_answer: "B", explanation: "" },
-            { id: 326, question_text: "Hành vi đỗ xe ngược chiều lưu thông gây nguy hiểm như thế nào?", option_a: "Không nguy hiểm.", option_b: "Chỉ bị phạt nhẹ.", option_c: "Nguy hiểm khi ra lại làn do góc quan sát ngược.", option_d: "Mòn lốp.", correct_answer: "C", explanation: "" },
-            { id: 329, question_text: "Khu vực nào sau đây tuyệt đối CẤM đỗ xe?", option_a: "Trước cổng nhà dân.", option_b: "Trên miệng cống thoát nước hoặc trạm xe buýt.", option_c: "Dưới bóng cây.", option_d: "Sát lề phải.", correct_answer: "B", explanation: "" },
-            { id: 336, question_text: "Vật liệu nào dễ cháy nhất khi tiếp xúc ống xả nóng?", option_a: "Cát.", option_b: "Rơm rạ, lá cây khô.", option_c: "Nước.", option_d: "Bùn.", correct_answer: "B", explanation: "" },
-            { id: 330, question_text: "Kỹ thuật 'Dutch Reach' ngăn ngừa tai nạn gì?", option_a: "Quên phanh tay.", option_b: "Mở cửa gây va chạm người đi sau.", option_c: "Điểm mù.", option_d: "Nhầm chân ga.", correct_answer: "B", explanation: "" },
-            { id: 335, question_text: "Tại sao đỗ xe trên nắp cống có nguy cơ CHÁY NỔ?", option_a: "Nắp cống sắc.", option_b: "Khí metan tích tụ gặp nhiệt từ xe.", option_c: "Chuột cắn dây.", option_d: "Nắp yếu.", correct_answer: "B", explanation: "" },
-            { id: 333, question_text: "Lợi ích của gập gương khi đỗ lề đường?", option_a: "Tránh va quẹt xe máy.", option_b: "Tránh bụi.", option_c: "Nghỉ hệ thống điện.", option_d: "Báo hiệu khóa.", correct_answer: "A", explanation: "" },
-            { id: 332, question_text: "Tại sao phải kéo phanh tay dù đường bằng phẳng?", option_a: "Bảo vệ hộp số.", option_b: "Xe có thể trôi do độ dốc nhỏ khó thấy.", option_c: "Để đèn sáng.", option_d: "Khóa vô lăng.", correct_answer: "B", explanation: "" },
-            { id: 325, question_text: "Bánh xe không được cách lề quá bao nhiêu?", option_a: "20cm.", option_b: "25cm.", option_c: "30cm.", option_d: "40cm.", correct_answer: "B", explanation: "" }
-        ];
-
-        // --- LOGIC HỆ THỐNG ---
+        let timerInterval = null;
+        let currentExercisesList = [];
 
         // 1. Khởi tạo Sidebar
         function initSidebar() {
             const list = document.getElementById('sidebar-list');
             let html = `<li><a href="#" onclick="renderDashboard()" class="bg-color-0"><i class="fas fa-home"></i> Trang Tổng Quan</a></li>`;
-            
-            // Các icon trang trí
             const icons = ["fa-car", "fa-truck", "fa-language", "fa-calculator", "fa-square-root-alt", "fa-globe"];
 
-            MOCK_CONTESTS.forEach((contest, index) => {
-                // Logic chọn màu xoay vòng (cycle through 1-6)
+            LIST_CONTESTS.forEach((contest, index) => {
                 const colorClass = `bg-color-${(index % 6) + 1}`;
                 const iconClass = icons[index % icons.length];
                 
-                // Nếu active thì cho click, không thì disabled style
                 if (contest.active) {
                     html += `
                         <li>
@@ -314,7 +341,7 @@
                 } else {
                     html += `
                         <li>
-                            <a href="#" onclick="alert('Dữ liệu bài này chưa được tải về bản Offline.')" class="${colorClass} disabled-link">
+                            <a href="#" onclick="alert('Bài thi này đang bị khóa hoặc chưa tải về.')" class="${colorClass} disabled-link">
                                 <i class="fas ${iconClass}"></i>
                                 ${contest.name} (Khóa)
                             </a>
@@ -329,58 +356,50 @@
         function handleLogin() {
             const select = document.getElementById('user-select');
             const val = select.value;
-            if(!val) {
-                alert("Vui lòng chọn tên để tiếp tục!");
-                return;
-            }
+            if(!val) { alert("Vui lòng chọn tên để tiếp tục!"); return; }
             currentUser = val;
             document.getElementById('user-display').innerText = currentUser;
-            document.getElementById('login-modal').classList.add('hidden'); // Ẩn modal bằng CSS
-            document.getElementById('login-modal').style.display = 'none'; // Đảm bảo ẩn hẳn
+            document.getElementById('login-modal').style.display = 'none';
             renderDashboard();
         }
 
-        // 3. Render Dashboard (Trang chủ)
+        // 3. Render Dashboard
         function renderDashboard() {
+            clearInterval(timerInterval);
             document.getElementById('page-title').innerText = "Trang Tổng Quan";
-            const area = document.getElementById('dynamic-area');
-            
-            area.innerHTML = `
+            document.getElementById('dynamic-area').innerHTML = `
                 <div class="bg-white p-8 rounded-xl shadow-2xl animate-fade-in">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">
-                        Chào mừng đến với hệ thống huấn luyện
-                    </h2>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">Hệ thống huấn luyện V3.2</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
                             <h3 class="text-xl font-bold text-indigo-700 mb-2"><i class="fas fa-check-circle"></i> Trạng thái</h3>
-                            <p class="text-gray-600">Bạn đang đăng nhập với tư cách: <strong>${currentUser}</strong></p>
-                            <p class="text-gray-600 mt-2">Hãy chọn một bài tập từ <strong>Thanh bên trái</strong> để bắt đầu.</p>
+                            <p>Đăng nhập: <strong>${currentUser}</strong></p>
                         </div>
                         <div class="bg-green-50 p-6 rounded-xl border border-green-100">
-                            <h3 class="text-xl font-bold text-green-700 mb-2"><i class="fas fa-info-circle"></i> Thông tin phiên bản</h3>
-                            <p class="text-gray-600">Phiên bản: <strong>V3 (Sidebar UI)</strong></p>
-                            <p class="text-gray-600">Dữ liệu sẵn có: <strong>Bài thi ID 27</strong></p>
+                            <h3 class="text-xl font-bold text-green-700 mb-2"><i class="fas fa-database"></i> Dữ liệu</h3>
+                            <p>Số lượng đề thi: <strong>${LIST_CONTESTS.filter(c=>c.active).length}</strong></p>
                         </div>
-                    </div>
-                    
-                    <div class="mt-8 text-center">
-                        <img src="https://img.freepik.com/free-vector/online-test-concept-illustration_114360-5474.jpg?w=900" 
-                             alt="Illustration" style="max-height: 300px; max-width: 100%; border-radius: 12px;">
                     </div>
                 </div>
             `;
         }
 
-        // 4. Render Trang làm bài
+        // 4. Render Trang làm bài (ĐÃ ĐƯỢC CẢI TIẾN ĐỂ TỰ ĐỘNG TÌM DỮ LIỆU)
         function renderQuizPage(contestId) {
             currentContestId = contestId;
             quizAnswers = {};
-            const contest = MOCK_CONTESTS.find(c => c.id === contestId);
-            // Ở bản demo này chỉ có data cho bài 27, nếu bài khác active mà chưa có data thì fallback
-            const exercises = (contestId === 27) ? MOCK_EXERCISES_ID27 : [];
+            
+            // Tìm thông tin đề thi trong danh sách cấu hình
+            const contest = LIST_CONTESTS.find(c => c.id === contestId);
+            
+            // Lấy danh sách câu hỏi từ ngân hàng câu hỏi dựa trên ID
+            // NẾU KHÔNG CÓ DỮ LIỆU => Gán mảng rỗng
+            const exercises = QUESTION_BANK[contestId] || [];
+            
+            currentExercisesList = exercises;
 
             if (exercises.length === 0) {
-                alert("Dữ liệu câu hỏi đang cập nhật.");
+                alert("Dữ liệu câu hỏi cho bài này chưa được nhập (ID: " + contestId + ")");
                 return;
             }
 
@@ -389,38 +408,31 @@
             const area = document.getElementById('dynamic-area');
             area.innerHTML = `
                 <div class="bg-white p-8 rounded-xl shadow-2xl">
-                    <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <div class="flex justify-between items-center mb-6 border-b pb-4 sticky top-0 bg-white z-10">
                         <h3 class="text-2xl font-bold text-indigo-600">${contest.name}</h3>
-                        <span class="bg-yellow-100 text-yellow-800 py-1 px-3 rounded-full font-bold text-sm">
-                            <i class="far fa-clock"></i> ${contest.duration} phút
+                        <span id="timer-display" class="bg-yellow-100 text-yellow-800 py-2 px-4 rounded-full font-bold text-lg border border-yellow-300">
+                            <i class="fas fa-stopwatch"></i> --:--
                         </span>
                     </div>
-                    
                     <form id="quiz-form">
                         <div class="space-y-6 mb-8">
                             ${exercises.map((ex, index) => renderQuestion(ex, index)).join('')}
                         </div>
-                        
                         <div class="flex gap-4">
-                            <button type="button" onclick="renderDashboard()" class="btn-action bg-gray" style="flex:1">
-                                <i class="fas fa-arrow-left"></i> Hủy bỏ
-                            </button>
-                            <button type="button" onclick="handleSubmitQuiz()" class="btn-action bg-green" style="flex:2">
-                                <i class="fas fa-paper-plane"></i> NỘP BÀI
-                            </button>
+                            <button type="button" onclick="renderDashboard()" class="btn-action bg-gray" style="flex:1">Hủy bỏ</button>
+                            <button type="button" onclick="handleSubmitQuiz(false)" class="btn-action bg-green" style="flex:2">NỘP BÀI</button>
                         </div>
                     </form>
                 </div>
             `;
             window.scrollTo(0, 0);
+            startTimer(contest.duration);
         }
 
         function renderQuestion(ex, index) {
             return `
                 <div class="p-6 border border-gray-200 rounded-xl hover:bg-gray-50 transition" id="q-container-${ex.id}">
-                    <p class="font-bold text-lg mb-4 text-gray-800">
-                        <span class="text-indigo-500">Câu ${index + 1}:</span> ${ex.question_text}
-                    </p>
+                    <p class="font-bold text-lg mb-4 text-gray-800"><span class="text-indigo-500">Câu ${index + 1}:</span> ${ex.question_text}</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         ${['A', 'B', 'C', 'D'].map(opt => `
                             <label class="flex items-center p-3 border rounded-lg cursor-pointer bg-white hover:border-indigo-400 transition">
@@ -436,49 +448,82 @@
         function updateAnswer(id, val) {
             quizAnswers[id] = val;
             const el = document.getElementById(`q-container-${id}`);
-            if(el) el.style.borderColor = "#e5e7eb"; // Reset màu border
+            if(el) el.style.borderColor = "#e5e7eb"; 
         }
 
-        // 5. Xử lý Nộp bài & Chấm điểm
-        function handleSubmitQuiz() {
-            const exercises = MOCK_EXERCISES_ID27;
+        // --- HÀM XỬ LÝ TIMER ---
+        function startTimer(durationMinutes) {
+            let timer = durationMinutes * 60;
+            const display = document.getElementById('timer-display');
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(function () {
+                let minutes = parseInt(timer / 60, 10);
+                let seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                if (display) {
+                    display.innerHTML = `<i class="fas fa-stopwatch"></i> ${minutes}:${seconds}`;
+                    if (timer < 60) display.classList.add('timer-warning');
+                }
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function handleTimeOut() {
+            const answeredCount = Object.keys(quizAnswers).length;
+            const total = currentExercisesList.length;
+            if (answeredCount === total) {
+                alert("Đã hết thời gian! Hệ thống sẽ tự động nộp bài.");
+                handleSubmitQuiz(true);
+            } else {
+                alert("Đã hết thời gian nhưng chưa hoàn thành. Bạn phải làm lại!");
+                renderQuizPage(currentContestId);
+            }
+        }
+
+        // 5. Nộp bài
+        function handleSubmitQuiz(isAutoSubmit = false) {
+            const exercises = currentExercisesList;
             const answeredCount = Object.keys(quizAnswers).length;
             
-            if (answeredCount < exercises.length) {
-                alert(`Bạn mới hoàn thành ${answeredCount}/${exercises.length} câu. Hãy làm hết trước khi nộp!`);
+            if (!isAutoSubmit && answeredCount < exercises.length) {
+                alert(`Bạn mới hoàn thành ${answeredCount}/${exercises.length} câu.`);
                 exercises.forEach(ex => {
                     if(!quizAnswers[ex.id]) {
                         const el = document.getElementById(`q-container-${ex.id}`);
-                        if(el) el.style.borderColor = "#ef4444"; // Đánh dấu đỏ
+                        if(el) el.style.borderColor = "#ef4444"; 
                     }
                 });
                 return;
             }
 
-            if(!confirm("Xác nhận nộp bài?")) return;
+            if(!isAutoSubmit && !confirm("Xác nhận nộp bài?")) return;
+            clearInterval(timerInterval);
 
-            // Chấm điểm
             let score = 0;
             exercises.forEach((ex) => {
                 if(quizAnswers[ex.id] === ex.correct_answer) score++;
             });
             const total = exercises.length;
-            const scoreText = `${score}/${total}`;
-
+            
             // Gửi Google Sheets
             const googleScriptUrl = "https://script.google.com/macros/s/AKfycbxaSm0voyg3Cjxe3edtc_wOGDko-ysVqQeUPbiLDAWdpbunE5ugn1rq4JD6NHc3pleW3Q/exec";
-            const finalUrl = `${googleScriptUrl}?cotA=${currentContestId}&cotB=${encodeURIComponent(currentUser)}&cotC=${scoreText}`;
-
-            fetch(finalUrl, { mode: 'no-cors' })
-                .then(() => console.log("Sent to Google Sheet"))
-                .catch(err => console.error(err));
+            const finalUrl = `${googleScriptUrl}?cotA=${currentContestId}&cotB=${encodeURIComponent(currentUser)}&cotC=${score}*${total}`;
+            fetch(finalUrl, { mode: 'no-cors' }).catch(err => console.error(err));
 
             renderResultPage(exercises, score, total);
         }
 
-        // 6. Hiển thị Kết quả
+        // 6. Kết quả
         function renderResultPage(exercises, score, total) {
-            document.getElementById('page-title').innerText = "Kết Quả Bài Thi";
+            clearInterval(timerInterval);
+            document.getElementById('page-title').innerText = "Kết Quả";
             const percent = (score/total) * 100;
             const isPass = percent >= 70;
             
@@ -488,28 +533,24 @@
                         <div class="inline-block p-6 rounded-full border-4 ${isPass ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'} mb-4">
                             <h2 class="text-4xl font-bold ${isPass ? 'text-green-600' : 'text-red-600'}">${score} / ${total}</h2>
                         </div>
-                        <p class="text-xl font-bold text-gray-700">${isPass ? 'XUẤT SẮC! BẠN ĐÃ ĐẠT YÊU CẦU' : 'CẦN CỐ GẮNG HƠN'}</p>
+                        <p class="text-xl font-bold text-gray-700">${isPass ? 'ĐẠT YÊU CẦU' : 'CHƯA ĐẠT'}</p>
                     </div>
-
                     <div class="space-y-6">
             `;
 
             exercises.forEach((ex, index) => {
                 const userChoice = quizAnswers[ex.id];
                 const isCorrect = userChoice === ex.correct_answer;
-                const statusClass = isCorrect ? 'correct-answer' : 'wrong-answer';
                 
                 html += `
-                    <div class="p-4 rounded-lg ${statusClass}">
+                    <div class="p-4 rounded-lg ${isCorrect ? 'correct-answer' : 'wrong-answer'}">
                         <p class="font-bold text-gray-800 mb-2">Câu ${index + 1}: ${ex.question_text}</p>
                         <div class="ml-4 space-y-1 text-sm text-gray-700">
                              ${['A', 'B', 'C', 'D'].map(opt => {
                                 let style = "";
-                                const text = ex[`option_${opt.toLowerCase()}`];
                                 if (opt === ex.correct_answer) style = "font-weight:bold; color:#16a34a;"; 
                                 if (opt === userChoice && !isCorrect) style = "font-weight:bold; color:#dc2626; text-decoration:line-through;";
-                                
-                                return `<div style="${style}">${opt}. ${text} ${opt === ex.correct_answer ? '(ĐÁP ÁN ĐÚNG)' : ''}</div>`;
+                                return `<div style="${style}">${opt}. ${ex[`option_${opt.toLowerCase()}`]} ${opt === ex.correct_answer ? '(ĐÚNG)' : ''}</div>`;
                             }).join('')}
                         </div>
                         <div class="mt-2 p-2 bg-white bg-opacity-60 rounded text-sm italic text-gray-600">
@@ -519,23 +560,14 @@
                 `;
             });
 
-            html += `
-                    </div>
-                    <div class="mt-8 text-center">
-                        <button onclick="renderDashboard()" class="btn-action bg-indigo">
-                            <i class="fas fa-home"></i> Quay về Trang Chủ
-                        </button>
-                    </div>
-                </div>
-            `;
-            
+            html += `</div><div class="mt-8 text-center"><button onclick="renderDashboard()" class="btn-action bg-indigo">Quay về Trang Chủ</button></div></div>`;
             document.getElementById('dynamic-area').innerHTML = html;
             window.scrollTo(0, 0);
         }
 
-        // Khởi chạy
         window.onload = initSidebar;
-
     </script>
 </body>
 </html>
+
+```
