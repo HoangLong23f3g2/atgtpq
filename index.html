@@ -146,7 +146,40 @@
             /* Nút bấm cuối trang */
             .flex.gap-4 { gap: 10px; }
         }
-    </style>
+			
+		/* Trang trí đồng hồ khi nằm trên Top Bar */
+/* SỬA LẠI: Đồng hồ nhỏ gọn */
+#timer-display {
+    /* Quan trọng: Đặt auto để khung tự co lại theo nội dung chữ */
+    width: auto !important;
+    min-width: auto !important; 
+    
+    /* Giảm khoảng cách từ chữ ra viền (trên-dưới: 2px, trái-phải: 8px) */
+    padding: 2px 8px !important; 
+    
+    /* Giảm cỡ chữ một chút cho tinh tế */
+    font-size: 0.85rem !important; 
+    
+    /* Các phần trang trí màu sắc */
+    background-color: #fee2e2;
+    color: #c02a2a;
+    border: 1px solid #fca5a5;
+    border-radius: 20px;
+    margin-left: 8px; /* Khoảng cách với chữ "Làm Bài" */
+    
+    /* Căn chỉnh */
+    display: inline-block;
+    vertical-align: middle;
+}	
+			
+			
+			
+		
+	
+	
+	
+	
+	</style>
 </head>
 <body>
 
@@ -415,69 +448,75 @@
         }
 
         function renderDashboard() {
-            clearInterval(timerInterval);
-            document.getElementById('page-title').innerText = "Trang Chủ";
-            if(window.innerWidth <= 768) {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.getElementById('overlay');
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            }
-            
-            document.getElementById('dynamic-area').innerHTML = `
-                <div class="bg-white p-responsive-container rounded-xl shadow-2xl animate-fade-in text-center">
-                    <div style="margin-bottom: 20px;">
-                        <i class="fas fa-hand-point-left fa-3x text-indigo-300"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Xin chào, ${currentUser}</h2>
-                    <p class="text-gray-500">Vui lòng mở menu bên trái và chọn đề thi để bắt đầu.</p>
-                </div>
-            `;
-        }
+    clearInterval(timerInterval);
+    
+    // --- TRẢ LẠI TIÊU ĐỀ CŨ (Xóa đồng hồ) ---
+    document.getElementById('page-title').innerText = "Trang Chủ";
+    // ----------------------------------------
 
+    if(window.innerWidth <= 768) {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+    
+    document.getElementById('dynamic-area').innerHTML = `
+        <div class="bg-white p-responsive-container rounded-xl shadow-2xl animate-fade-in text-center">
+            <div style="margin-bottom: 20px;">
+                <i class="fas fa-hand-point-left fa-3x text-indigo-300"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Xin chào, ${currentUser}</h2>
+            <p class="text-gray-500">Vui lòng mở menu bên trái và chọn đề thi để bắt đầu.</p>
+        </div>
+    `;
+}
+
+        
         function renderQuizPage(contestId) {
-            currentContestId = contestId;
-            quizAnswers = {};
-            
-            const contest = LIST_CONTESTS.find(c => c.id === contestId);
-            const exercises = QUESTION_BANK[contestId] || [];
-            currentExercisesList = exercises;
+    currentContestId = contestId;
+    quizAnswers = {};
+    
+    const contest = LIST_CONTESTS.find(c => c.id === contestId);
+    const exercises = QUESTION_BANK[contestId] || [];
+    currentExercisesList = exercises;
 
-            if (exercises.length === 0) {
-                alert("Dữ liệu câu hỏi chưa được nhập.");
-                return;
-            }
+    if (exercises.length === 0) {
+        alert("Dữ liệu câu hỏi chưa được nhập.");
+        return;
+    }
 
-            // Đóng menu nếu đang ở mobile
-            if (window.innerWidth <= 768) {
-                toggleSidebar();
-            }
+    if (window.innerWidth <= 768) {
+        toggleSidebar();
+    }
 
-            document.getElementById('page-title').innerText = "Làm Bài";
+    // --- THAY ĐỔI QUAN TRỌNG TẠI ĐÂY ---
+    // Chèn đồng hồ vào ngay cạnh chữ "Làm Bài" trên thanh Top Bar
+    const titleEl = document.getElementById('page-title');
+    titleEl.innerHTML = `Làm Bài <span id="timer-display"><i class="fas fa-stopwatch"></i> --:--</span>`;
+    // ------------------------------------
 
-            const area = document.getElementById('dynamic-area');
-            area.innerHTML = `
-                <div class="bg-white p-responsive-container rounded-xl shadow-2xl">
-                    <div class="flex justify-between items-center mb-6 border-b pb-4 sticky-header bg-white z-10" style="position: sticky; top: 0; padding-top: 10px;">
-                        <h3 class="text-2xl font-bold text-indigo-600">${contest.name}</h3>
-                        <span id="timer-display" class="bg-yellow-100 text-yellow-800 py-2 px-4 rounded-full font-bold text-lg border border-yellow-300 shadow-sm">
-                            <i class="fas fa-stopwatch"></i> --:--
-                        </span>
-                    </div>
-                    <form id="quiz-form">
-                        <div class="space-y-6 mb-8">
-                            ${exercises.map((ex, index) => renderQuestion(ex, index)).join('')}
-                        </div>
-                        <div class="flex gap-4">
-                            <button type="button" onclick="renderDashboard()" class="btn-action bg-gray" style="flex:1">Hủy</button>
-                            <button type="button" onclick="handleSubmitQuiz(false)" class="btn-action bg-green" style="flex:2">NỘP BÀI</button>
-                        </div>
-                    </form>
+    const area = document.getElementById('dynamic-area');
+    area.innerHTML = `
+        <div class="bg-white p-responsive-container rounded-xl shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h3 class="text-2xl font-bold text-indigo-600">${contest.name}</h3>
                 </div>
-            `;
-            window.scrollTo(0, 0);
-            startTimer(contest.duration);
-        }
+            <form id="quiz-form">
+                <div class="space-y-6 mb-8">
+                    ${exercises.map((ex, index) => renderQuestion(ex, index)).join('')}
+                </div>
+                <div class="flex gap-4">
+                    <button type="button" onclick="renderDashboard()" class="btn-action bg-gray" style="flex:1">Hủy</button>
+                    <button type="button" onclick="handleSubmitQuiz(false)" class="btn-action bg-green" style="flex:2">NỘP BÀI</button>
+                </div>
+            </form>
+        </div>
+    `;
+    
+    window.scrollTo(0, 0);
+    startTimer(contest.duration);
+}
 
         function renderQuestion(ex, index) {
             return `
